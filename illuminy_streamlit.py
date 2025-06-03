@@ -2,38 +2,20 @@ import os
 from dotenv import load_dotenv
 import openai
 import streamlit as st
-<<<<<<< HEAD
 import uuid
-=======
->>>>>>> 9df8fc6 (Initial commit for Illuminy Streamlit app)
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
-<<<<<<< HEAD
-=======
-from sklearn.metrics.pairwise import cosine_similarity
-from fpdf import FPDF
-import tempfile
->>>>>>> 9df8fc6 (Initial commit for Illuminy Streamlit app)
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-<<<<<<< HEAD
 def load_pdf(file_path):
     loader = PyMuPDFLoader(file_path)
     return loader.load()
-=======
-# Helper functions (same as before)...
-
-def load_pdf(file_path):
-    loader = PyMuPDFLoader(file_path)
-    documents = loader.load()
-    return documents
->>>>>>> 9df8fc6 (Initial commit for Illuminy Streamlit app)
 
 def split_documents(documents):
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
@@ -43,7 +25,6 @@ def build_vector_store(chunks):
     embeddings = OpenAIEmbeddings()
     return FAISS.from_documents(chunks, embeddings)
 
-<<<<<<< HEAD
 def ask_illuminy_with_vectorstore(query, vectorstore):
     qa = RetrievalQA.from_chain_type(
         llm=ChatOpenAI(model_name="gpt-3.5-turbo"),
@@ -106,7 +87,38 @@ if uploaded_files:
 
 if __name__ == "__main__":
     main()
-=======
+import os
+from dotenv import load_dotenv
+import openai
+import streamlit as st
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.document_loaders import PyMuPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.chains import RetrievalQA
+from langchain.chat_models import ChatOpenAI
+from sklearn.metrics.pairwise import cosine_similarity
+from fpdf import FPDF
+import tempfile
+
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Helper functions (same as before)...
+
+def load_pdf(file_path):
+    loader = PyMuPDFLoader(file_path)
+    documents = loader.load()
+    return documents
+
+def split_documents(documents):
+    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+    return splitter.split_documents(documents)
+
+def build_vector_store(chunks):
+    embeddings = OpenAIEmbeddings()
+    return FAISS.from_documents(chunks, embeddings)
+
 def create_qa_chain(vectorstore):
     llm = ChatOpenAI(model_name="gpt-3.5-turbo")
     return RetrievalQA.from_chain_type(
@@ -294,4 +306,3 @@ if st.session_state.chunks and writing_input.strip():
             text_report += "No significant similarities found.\n"
 
         st.download_button("Download Text Report", text_report, file_name="illuminy_report.txt")
->>>>>>> 9df8fc6 (Initial commit for Illuminy Streamlit app)
