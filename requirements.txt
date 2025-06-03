@@ -6,3 +6,5 @@ langchain
 langchain-community
 scikit-learn
 PyMuPDF
+tiktoken
+faiss-cpu
