@@ -2,3 +2,4 @@
 .streamlit/secrets.toml
 .streamlit/secrets.toml # Ignore it from now on
 
+.env
