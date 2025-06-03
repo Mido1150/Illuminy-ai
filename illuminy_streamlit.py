@@ -1,4 +1,5 @@
 import os
+import uuid
 from dotenv import load_dotenv
 import openai
 import streamlit as st
@@ -104,8 +105,6 @@ import tempfile
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Helper functions (same as before)...
-
 def load_pdf(file_path):
     loader = PyMuPDFLoader(file_path)
     documents = loader.load()
@@ -128,16 +127,19 @@ def create_qa_chain(vectorstore):
     )
 
 def ask_illuminy_general(prompt):
-    response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful academic research assistant named Illuminy."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-        max_tokens=500,
-    )
-    return response.choices[0].message.content
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful academic research assistant named Illuminy."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=500,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Error: {e}"
 
 def academic_write_and_explain(text):
     prompt = f"""
@@ -155,7 +157,6 @@ Here is the student text:
 \"\"\"
 
 Respond in three parts, clearly labeled:
-
 ---  
 1. Improved Text:
 
@@ -163,16 +164,19 @@ Respond in three parts, clearly labeled:
 
 3. Citation Suggestions:
 """
-    response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a helpful and encouraging academic writing coach."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-        max_tokens=800,
-    )
-    return response.choices[0].message.content
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful and encouraging academic writing coach."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=800,
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"Error: {e}"
 
 def check_plagiarism(chunks, input_text):
     embedder = OpenAIEmbeddings()
