@@ -184,6 +184,7 @@ def main():
             print("Invalid option, please try again.")
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     main()
     import streamlit as st
 
@@ -229,4 +230,6 @@ def main():
             st.write(answer)
 
 if __name__ == "__main__":
+=======
+>>>>>>> 9df8fc6 (Initial commit for Illuminy Streamlit app)
     main()
