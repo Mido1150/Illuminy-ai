@@ -5,3 +5,4 @@ fpdf
 langchain
 langchain-community
 scikit-learn
+PyMuPDF
