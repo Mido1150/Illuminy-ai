@@ -185,3 +185,48 @@ def main():
 
 if __name__ == "__main__":
     main()
+    import streamlit as st
+
+# ... your existing imports and code ...
+
+def load_pdf(file):
+    # Your existing PDF loading logic, e.g. PyMuPDFLoader
+    loader = PyMuPDFLoader(file)
+    documents = loader.load()
+    return documents
+
+def main():
+    st.title("Illuminy Academic Assistant - Multi PDF Support")
+
+    uploaded_files = st.file_uploader(
+        "Upload one or more PDF files",
+        type=["pdf"],
+        accept_multiple_files=True
+    )
+
+    if uploaded_files:
+        all_chunks = []
+        for uploaded_file in uploaded_files:
+            # Save uploaded file temporarily to disk
+            with open("temp_uploaded.pdf", "wb") as f:
+                f.write(uploaded_file.getbuffer())
+
+            # Load and chunk
+            chunks = load_pdf("temp_uploaded.pdf")
+            all_chunks.extend(chunks)
+
+        st.success(f"Loaded {len(all_chunks)} chunks from {len(uploaded_files)} PDFs.")
+
+        # Build vector store with all chunks combined
+        vectorstore = build_vector_store(all_chunks)
+
+        # Continue with your chat interface, querying etc.
+        # For example:
+        query = st.text_input("Ask Illuminy a question:")
+        if query:
+            answer = ask_illuminy_with_vectorstore(query, vectorstore)
+            st.write("### Illuminy says:")
+            st.write(answer)
+
+if __name__ == "__main__":
+    main()
