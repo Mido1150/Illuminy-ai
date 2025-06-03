@@ -1,7 +1,7 @@
 openai
 python-dotenv
 streamlit
-fpdf
+fpdf2
 langchain
 langchain-community
 scikit-learn
