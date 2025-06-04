@@ -1,5 +1,6 @@
 .streamlit/secrets.toml
-.streamlit/secrets.toml
 .streamlit/secrets.toml # Ignore it from now on
 
+.streamlit/secrets.toml
+.streamlit/secrets.toml
 .env
