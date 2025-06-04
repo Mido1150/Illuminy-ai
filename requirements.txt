@@ -1,9 +1,9 @@
-openai
-python-dotenv
 streamlit
-fpdf2
+openai
 langchain
 langchain-community
+python-dotenv
+fpdf
 scikit-learn
 PyMuPDF
 tiktoken
